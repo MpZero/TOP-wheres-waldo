@@ -1,6 +1,18 @@
 @import "tailwindcss";
 
+/* @import url("./assets/fonts//Optima\ Black.ttf");
+
+@font-face {
+  font-family: "optima-black";
+  src: url("./assets/fonts//OptimaBlack.ttf") format("ttf");
+} */
+
 :root {
+  font-family: "optima-black", serif;
+  color: white;
+  text-shadow: -0.4px 0px 0 #000, -2.2px 0 0 #000, -0.6px 0 0 #000,
+    0.6px 0 0 #000, 0.6px -1px 0 #000, 0 1px 0 #000;
+  font-weight: 700;
   background-color: oklch(74.6% 0.16 232.661);
 }
 
