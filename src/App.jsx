@@ -14,10 +14,33 @@ function App() {
     const yCoord = e.clientY - topRect;
 
     //Get coords in percentages
-    const relativeX = Math.round((100 * xCoord) / rect.width);
-    const relativeY = Math.round((100 * yCoord) / rect.height);
+    const relativeX = Number(((xCoord / rect.width) * 100).toFixed(2));
+    const relativeY = Number(((yCoord / rect.height) * 100).toFixed(2));
 
     console.log(`coords are: X${relativeX}% and Y${relativeY}%`);
+
+    validateCoordinates(relativeX, relativeY);
+  }
+
+  function validateCoordinates(userX, userY) {
+    console.log(`userX: ${userX} & userY: ${userY}`);
+
+    const tolerance = 2;
+
+    const wallyX = 91.48;
+    const wallyY = 55.55;
+
+    const hitX = userX >= wallyX - tolerance && userX <= wallyX + tolerance;
+
+    const hitY = userY >= wallyY - tolerance && userY <= wallyY + tolerance;
+
+    if (hitX && hitY) {
+      console.log(true);
+      return true;
+    } else {
+      console.log(false);
+      return false;
+    }
   }
 
   return (
@@ -27,11 +50,9 @@ function App() {
         <h1 className="text-red-500"> Waldo?</h1>
       </div>
 
-      <div className=" p-2 flex flex-col gap-2 bg-white border-double border-12 border-red-500 lg:col-end-2 lg:text-lg  ">
+      <div className=" p-1 flex  gap-8 text-nowrap text-lg bg-white border-double border-12 border-red-500 lg:col-end-2 lg:text-lg  ">
         {characters.map((character, index) => (
-          <p key={index} className=" border-b-2 border-double border-red-500 ">
-            {character}
-          </p>
+          <p key={index}>{character}</p>
         ))}
       </div>
 
