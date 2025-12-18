@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client"
+  // output   = "../node_modules/.prisma/client"npx
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Coordinates {
+  id     Int    @id @default(autoincrement())
+  WaldoX String @default("91.48")
+  WaldoY String @default("55.55")
+}
+
+model User {
+  id   Int     @id @default(autoincrement())
+  name String
+  time Int
+  won  Boolean
+}
