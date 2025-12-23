@@ -22,24 +22,22 @@ function App() {
     validateCoordinates(relativeX, relativeY);
   }
 
-  function validateCoordinates(userX, userY) {
-    console.log(`userX: ${userX} & userY: ${userY}`);
+  async function validateCoordinates(userX, userY) {
+    try {
+      const response = await fetch(`http://localhost:3000/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userX, userY }),
+      });
 
-    const tolerance = 2;
-
-    const wallyX = 91.48;
-    const wallyY = 55.55;
-
-    const hitX = userX >= wallyX - tolerance && userX <= wallyX + tolerance;
-
-    const hitY = userY >= wallyY - tolerance && userY <= wallyY + tolerance;
-
-    if (hitX && hitY) {
-      console.log(true);
-      return true;
-    } else {
-      console.log(false);
-      return false;
+      if (response.ok) {
+        const result = await response.json();
+        console.log(`validateCoords result`, result);
+      } else {
+        console.error("Request failed:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Network error:", error);
     }
   }
 

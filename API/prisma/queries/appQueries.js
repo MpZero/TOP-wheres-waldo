@@ -1,7 +1,12 @@
 import prisma from "../prismaClient";
 
-async function findUsers() {
-  return prisma.user.findMany({});
+async function getCoords() {
+  const coords = await prisma.image.findMany({
+    include: { characters: true },
+  });
+  console.log(`getCoords: `, coords);
+
+  return coords;
 }
 
-export default findUsers;
+export default getCoords;
