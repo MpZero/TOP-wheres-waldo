@@ -1,29 +1,35 @@
-import getCoords from "../prisma/queries/appQueries.js";
+import { findCharacters } from "../prisma/queries/appQueries.js";
 
-export default async function checkCoords(req, res) {
+export default async function validateCoordinates(req, res) {
   try {
-    const { userX, userY } = req.body;
+    const { imageId, userX, userY } = req.body;
 
-    const coords = await getCoords();
+    console.log(userX);
+    console.log(userY);
+    console.log(imageId);
 
-    const wallyX = coords[0].characters[0].x;
-    const wallyY = coords[0].characters[0].y;
-    const tolerance = coords[0].characters[0].tolerance;
+    const characters = await findCharacters(Number(imageId));
 
-    const hitX = userX >= wallyX - tolerance && userX <= wallyX + tolerance;
-    const hitY = userY >= wallyY - tolerance && userY <= wallyY + tolerance;
+    // console.log(characters);
 
-    if (hitX && hitY) {
-      console.log(true);
-      return res.status(201).json({
-        message: `Found!`,
-      });
-    } else {
-      console.log(false);
-      return;
-    }
+    characters.forEach((character) => {
+      const hitX =
+        userX >= character.x - character.tolerance &&
+        userX <= character.x + character.tolerance;
+      const hitY =
+        userY >= character.y - character.tolerance &&
+        userY <= character.y + character.tolerance;
+
+      if (hitX && hitY) {
+        console.log(`FOUND: ${character.name}`);
+        return res.status(201).json({
+          message: `Found!`,
+        });
+      } else {
+        console.log(`keep trying!`);
+      }
+    });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Internal server error" });
+    console.log(error);
   }
 }

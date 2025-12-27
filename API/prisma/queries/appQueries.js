@@ -8,5 +8,14 @@ async function getCoords() {
 
   return coords;
 }
+async function findCharacters(imageIds) {
+  const characters = await prisma.character.findMany({
+    where: { imageId: imageIds },
+  });
 
-export default getCoords;
+  // console.log(`characters: `, characters);
+
+  return characters;
+}
+
+export { getCoords, findCharacters };

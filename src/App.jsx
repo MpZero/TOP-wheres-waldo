@@ -19,15 +19,16 @@ function App() {
 
     console.log(`coords are: X${relativeX}% and Y${relativeY}%`);
 
-    validateCoordinates(relativeX, relativeY);
+    compareCoordinates(relativeX, relativeY);
   }
 
-  async function validateCoordinates(userX, userY) {
+  async function compareCoordinates(userX, userY) {
+    const imageId = 2;
     try {
       const response = await fetch(`http://localhost:3000/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userX, userY }),
+        body: JSON.stringify({ userX, userY, imageId }),
       });
 
       if (response.ok) {
