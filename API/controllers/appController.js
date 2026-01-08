@@ -4,9 +4,9 @@ export default async function validateCoordinates(req, res) {
   try {
     const { imageId, userX, userY } = req.body;
 
-    console.log(userX);
-    console.log(userY);
-    console.log(imageId);
+    // console.log(userX);
+    // console.log(userY);
+    // console.log(imageId);
 
     const characters = await findCharacters(Number(imageId));
 
@@ -21,12 +21,12 @@ export default async function validateCoordinates(req, res) {
         userY <= character.y + character.tolerance;
 
       if (hitX && hitY) {
-        console.log(`FOUND: ${character.name}`);
+        console.log(`CONTROLLER: ${character.name}`);
         return res.status(201).json({
-          message: `Found!`,
+          id: character.id,
         });
       } else {
-        console.log(`keep trying!`);
+        return;
       }
     });
   } catch (error) {

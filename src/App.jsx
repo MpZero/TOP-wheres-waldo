@@ -1,9 +1,41 @@
 import waldoFilmSet from "./assets/waldo-filmset.jpg";
+import { useState, useEffect } from "react";
 
 function App() {
   const characters = ["Waldo", "Odlaw", "Wizard Whitebeard", "Woof", "Wenda"];
 
+  const [found, setFound] = useState(new Set());
+  const [isRunning, setIsRunning] = useState(true);
+  const [elapsedTime, setElapsedTime] = useState(0);
+
+  useEffect(() => {
+    let interval;
+    if (isRunning) {
+      interval = setInterval(() => {
+        setElapsedTime((prev) => prev + 10);
+      }, 10);
+    }
+    return () => clearInterval(interval);
+  }, [isRunning]);
+
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60000);
+    const seconds = Math.floor((time % 60000) / 1000);
+    const milliseconds = Math.floor((time % 1000) / 10);
+    return `${minutes.toString().padStart(2, "0")}:${seconds
+      .toString()
+      .padStart(2, "0")}:${milliseconds.toString().padStart(2, "0")}`;
+  };
+
+  const finishGame = () => {
+    setIsRunning(false);
+    console.log("Finished game. Your time:", formatTime(elapsedTime));
+
+    alert(`You won! Time: ${formatTime(elapsedTime)}`);
+  };
+
   function getCoords(e) {
+    if (!isRunning) return;
     const img = e.target;
     const rect = img.getBoundingClientRect();
     const leftRect = rect.left;
@@ -33,9 +65,17 @@ function App() {
 
       if (response.ok) {
         const result = await response.json();
-        console.log(`validateCoords result`, result);
-      } else {
-        console.error("Request failed:", response.statusText);
+        console.log(`api call result`, result);
+
+        if (result.id && !found.has(result.id)) {
+          const newFound = new Set(found);
+          newFound.add(result.id);
+          setFound(newFound);
+          console.log(`newfound`, newFound);
+          if (newFound.size === 5) {
+            finishGame();
+          }
+        }
       }
     } catch (error) {
       console.error("Network error:", error);
@@ -47,6 +87,7 @@ function App() {
       <div className=" flex gap-1.5 pl-2  bg-white border-double border-12 border-red-500 lg:col-span-full lg:items-center cursor-pointer">
         <h1 className=" text-blue-500">Where's</h1>
         <h1 className="text-red-500"> Waldo?</h1>
+        <div className="timer">{formatTime(elapsedTime)}</div>
       </div>
 
       <div className=" p-1 flex  gap-8 text-nowrap text-lg bg-white border-double border-12 border-red-500 lg:col-end-2 lg:text-lg  ">
