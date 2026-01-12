@@ -13,9 +13,21 @@ async function findCharacters(imageIds) {
     where: { imageId: imageIds },
   });
 
-  // console.log(`characters: `, characters);
-
   return characters;
 }
 
-export { getCoords, findCharacters };
+async function findUsers() {
+  const users = await prisma.user.findMany({
+    take: 10,
+    orderBy: { time: "asc" },
+  });
+  return users;
+}
+
+async function createUser(time, name) {
+  const user = await prisma.user.create({
+    data: { name: name, time: time },
+  });
+  console.log(user);
+}
+export { getCoords, findCharacters, createUser, findUsers };

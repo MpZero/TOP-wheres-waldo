@@ -1,7 +1,13 @@
 import { Router } from "express";
-import checkCoords from "../controllers/appController.js";
+import {
+  validateCoordinates,
+  getScores,
+  postScore,
+} from "../controllers/appController.js";
 const router = Router();
 
-router.post("/", checkCoords);
+router.post("/", validateCoordinates);
+router.get("/scores", getScores);
+router.post("/scores", postScore);
 
 export default router;

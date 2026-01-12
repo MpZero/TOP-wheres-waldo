@@ -1,6 +1,10 @@
-import { findCharacters } from "../prisma/queries/appQueries.js";
+import {
+  findCharacters,
+  findUsers,
+  createUser,
+} from "../prisma/queries/appQueries.js";
 
-export default async function validateCoordinates(req, res) {
+async function validateCoordinates(req, res) {
   try {
     const { imageId, userX, userY } = req.body;
 
@@ -33,3 +37,26 @@ export default async function validateCoordinates(req, res) {
     console.log(error);
   }
 }
+
+async function getScores(req, res) {
+  const scores = await findUsers();
+  return res.status(201).json({
+    scores,
+  });
+}
+
+async function postScore(req, res) {
+  console.log(`postScore`, req.body);
+
+  const { time, user } = req.body;
+  const users = await createUser(time, user);
+
+  if (users) {
+    console.log(users);
+  }
+  return res.status(201).json({
+    message: `postScore`,
+  });
+}
+
+export { validateCoordinates, postScore, getScores };

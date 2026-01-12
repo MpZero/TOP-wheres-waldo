@@ -1,5 +1,6 @@
 import waldoFilmSet from "./assets/waldo-filmset.jpg";
 import { useState, useEffect } from "react";
+import { Link } from "react-router";
 
 function App() {
   const characters = ["Waldo", "Odlaw", "Wizard Whitebeard", "Woof", "Wenda"];
@@ -27,11 +28,23 @@ function App() {
       .padStart(2, "0")}:${milliseconds.toString().padStart(2, "0")}`;
   };
 
-  const finishGame = () => {
+  const finishGame = async () => {
     setIsRunning(false);
-    console.log("Finished game. Your time:", formatTime(elapsedTime));
+    console.log("Finished game. Your time:", elapsedTime);
+    setElapsedTime(elapsedTime);
+    const userInput = prompt("Please enter your name:");
 
-    alert(`You won! Time: ${formatTime(elapsedTime)}`);
+    console.log(`elapsed time ${elapsedTime}, user: ${userInput}`);
+
+    const api = await fetch("http://localhost:3000/scores", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ time: elapsedTime, user: userInput }),
+    });
+
+    console.log(`appjsx api response`, api);
   };
 
   function getCoords(e) {
@@ -88,6 +101,7 @@ function App() {
         <h1 className=" text-blue-500">Where's</h1>
         <h1 className="text-red-500"> Waldo?</h1>
         <div className="timer">{formatTime(elapsedTime)}</div>
+        <Link to="/scores">Leaderboard</Link>
       </div>
 
       <div className=" p-1 flex  gap-8 text-nowrap text-lg bg-white border-double border-12 border-red-500 lg:col-end-2 lg:text-lg  ">
