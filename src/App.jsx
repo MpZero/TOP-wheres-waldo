@@ -1,9 +1,17 @@
 import waldoFilmSet from "./assets/waldo-filmset.jpg";
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
+import classNames from "classnames";
 
 function App() {
-  const characters = ["Waldo", "Odlaw", "Wizard Whitebeard", "Woof", "Wenda"];
+  //change this later
+  const characters = [
+    { id: 2, name: "Waldo" },
+    { id: 3, name: "Wenda" },
+    { id: 4, name: "Odlaw" },
+    { id: 5, name: "Wizard Whitebeard" },
+    { id: 6, name: "Woof" },
+  ];
 
   const [found, setFound] = useState(new Set());
   const [isRunning, setIsRunning] = useState(true);
@@ -79,7 +87,6 @@ function App() {
       if (response.ok) {
         const result = await response.json();
         console.log(`api call result`, result);
-
         if (result.id && !found.has(result.id)) {
           const newFound = new Set(found);
           newFound.add(result.id);
@@ -95,18 +102,28 @@ function App() {
     }
   }
 
+  const toggleClasses = classNames({
+    "line-through decoration-red-500": found,
+  });
+
   return (
     <div className="p-0.5 bg-sky-400 min-w-xl min-h-dvh font-display lg:grid grid-cols-6 text-2xl xl:text-4xl">
-      <div className=" flex gap-1.5 pl-2  bg-white border-double border-12 border-red-500 lg:col-span-full lg:items-center cursor-pointer">
-        <h1 className=" text-blue-500">Where's</h1>
-        <h1 className="text-red-500"> Waldo?</h1>
+      <div className=" flex justify-between px-2  bg-white border-double border-12 border-red-500 lg:col-span-full lg:items-center cursor-pointer">
+        <div className="flex gap-1.5">
+          <h1 className=" text-blue-500">Where's</h1>
+          <h1 className="text-red-500"> Waldo?</h1>
+        </div>
         <div className="timer">{formatTime(elapsedTime)}</div>
-        <Link to="/scores">Leaderboard</Link>
+        <Link to="/scores" className="text-amber-400">
+          Leaderboard
+        </Link>
       </div>
 
-      <div className=" p-1 flex  gap-8 text-nowrap text-lg bg-white border-double border-12 border-red-500 lg:col-end-2 lg:text-lg  ">
-        {characters.map((character, index) => (
-          <p key={index}>{character}</p>
+      <div className=" px-2 flex  gap-8 text-nowrap text-lg bg-white border-double border-12 border-red-500 lg:col-end-2 lg:text-lg  ">
+        {characters.map((char) => (
+          <p key={char.id} className={found.has(char.id) ? toggleClasses : ""}>
+            {char.name}
+          </p>
         ))}
       </div>
 
