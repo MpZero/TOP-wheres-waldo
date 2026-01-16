@@ -16,6 +16,7 @@ function App() {
   const [found, setFound] = useState(new Set());
   const [isRunning, setIsRunning] = useState(true);
   const [elapsedTime, setElapsedTime] = useState(0);
+  const [markers, setMarkers] = useState([]);
 
   useEffect(() => {
     let interval;
@@ -92,6 +93,10 @@ function App() {
           newFound.add(result.id);
           setFound(newFound);
           console.log(`newfound`, newFound);
+          setMarkers((prevMarkers) => [
+            ...prevMarkers,
+            { id: result.id, x: userX, y: userY },
+          ]);
           if (newFound.size === 5) {
             finishGame();
           }
@@ -105,6 +110,21 @@ function App() {
   const toggleClasses = classNames({
     "line-through decoration-red-500": found,
   });
+
+  const styles = {
+    markerCircle: {
+      position: "absolute",
+      width: "75px",
+      height: "75px",
+      borderRadius: "50%",
+      border: "3px solid rgb(255, 255, 255)",
+      backgroundColor: "rgba(255, 225, 200, 0.5)",
+      boxShadow: "0 0 10px rgba(0,0,0))",
+      pointerEvents: "none",
+      transform: "translate(-50%, -50%)",
+      zIndex: 10,
+    },
+  };
 
   return (
     <div className="p-0.5 bg-sky-400 min-w-xl min-h-dvh font-display lg:grid grid-cols-6 text-2xl xl:text-4xl">
@@ -127,13 +147,18 @@ function App() {
         ))}
       </div>
 
-      <div className="bg-white border-double border-12 border-red-500 lg:col-start-2 col-end-7 ">
-        <img
-          onClick={(e) => getCoords(e)}
-          className="border-4 border-white "
-          src={waldoFilmSet}
-          alt=""
-        />
+      <div className="bg-white border-double border-12 border-red-500 lg:col-start-2 col-end-7 relative">
+        <img src={waldoFilmSet} alt="" onClick={getCoords} />
+        {markers.map((marker) => (
+          <div
+            key={marker.id}
+            style={{
+              ...styles.markerCircle,
+              left: `${marker.x}%`,
+              top: `${marker.y}%`,
+            }}
+          ></div>
+        ))}
       </div>
 
       <footer className="text-center bg-white border-double border-12 border-red-500 lg:col-start-1 col-end-7  ">
