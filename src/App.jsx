@@ -127,27 +127,27 @@ function App() {
   };
 
   return (
-    <div className=" bg-sky-400 min-w-xl min-h-dvh font-display lg:grid grid-cols-6 text-2xl xl:text-4xl">
-      <div className=" flex justify-between px-2  bg-white border-double border-12 border-red-500 lg:col-span-full lg:items-center cursor-pointer">
+    <>
+      <div className=" flex justify-between lg:justify-around px-4 bg-white border-double border-12 border-red-500">
         <div className="flex gap-1.5">
-          <h1 className=" text-blue-500">Where's</h1>
-          <h1 className="text-red-500"> Waldo?</h1>
+          <Link to="/" className="flex gap-2">
+            <h1 className=" text-blue-500">Where's</h1>
+            <h1 className="text-red-500"> Waldo?</h1>
+          </Link>
         </div>
         <div className="timer">{formatTime(elapsedTime)}</div>
         <Link to="/scores" className="text-amber-400">
           Leaderboard
         </Link>
       </div>
-
-      <div className=" px-2 flex  gap-8 text-nowrap text-lg bg-white border-double border-12 border-red-500 lg:col-end-2 lg:text-lg  ">
+      <div className="flex px-2  lg:gap-8 justify-around bg-white border-double border-12 border-red-500    ">
         {characters.map((char) => (
           <p key={char.id} className={found.has(char.id) ? toggleClasses : ""}>
             {char.name}
           </p>
         ))}
       </div>
-
-      <div className="bg-white border-double border-12 border-red-500 lg:col-start-2 col-end-7 relative">
+      <div className="bg-white border-double border-12 border-red-500 flex justify-center relative">
         <img src={waldoFilmSet} alt="" onClick={getCoords} />
         {markers.map((marker) => (
           <div
@@ -160,7 +160,7 @@ function App() {
           ></div>
         ))}
       </div>
-    </div>
+    </>
   );
 }
 

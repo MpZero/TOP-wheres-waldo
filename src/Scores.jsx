@@ -23,24 +23,26 @@ function HighScores() {
   };
 
   return (
-    <div>
-      <div className=" flex justify-between px-2  bg-white border-double border-12 border-red-500 lg:col-span-full lg:items-center cursor-pointer">
-        <div className="flex gap-1.5">
-          <h1 className="text-red-500"> Leaderboard</h1>
-        </div>
-        <Link to="/">Play again</Link>
+    <>
+      <div className=" flex px-4 bg-white border-double border-12 border-red-500">
+        <h1 className="text-red-500 flex-1"> Leaderboard</h1>
+        <Link to="/" className="text-amber-400">
+          Play again
+        </Link>
       </div>
-
-      <div className="flex justify-center px-2  bg-white border-double border-12 border-red-500 text-2xl ">
-        <ul className="">
+      <div className="flex justify-center text-center grid-cols-4 items-center px-2 p-10 bg-white border-double border-12 border-red-500  ">
+        <ul className="pr-10">
           {scores.map((score, index) => (
-            <li key={index}>
-              {score.name}: {formatTime(score.time)}
+            <li key={index} className="grid grid-cols-3 py-1">
+              <div className="text-end">{index + 1}.</div>
+              <div className="text-amber-500 text-center">{score.name}</div>
+
+              <div>-- {formatTime(score.time)}</div>
             </li>
           ))}
         </ul>
       </div>
-    </div>
+    </>
   );
 }
 
