@@ -127,7 +127,7 @@ function App() {
   };
 
   return (
-    <div className="p-0.5 bg-sky-400 min-w-xl min-h-dvh font-display lg:grid grid-cols-6 text-2xl xl:text-4xl">
+    <div className=" bg-sky-400 min-w-xl min-h-dvh font-display lg:grid grid-cols-6 text-2xl xl:text-4xl">
       <div className=" flex justify-between px-2  bg-white border-double border-12 border-red-500 lg:col-span-full lg:items-center cursor-pointer">
         <div className="flex gap-1.5">
           <h1 className=" text-blue-500">Where's</h1>
@@ -160,17 +160,6 @@ function App() {
           ></div>
         ))}
       </div>
-
-      <footer className="text-center bg-white border-double border-12 border-red-500 lg:col-start-1 col-end-7  ">
-        © 2025 Coded by
-        <a
-          href="https://github.com/MpZero"
-          className="text-red-500 hover:text-red-300"
-        >
-          {" "}
-          Gonzalo Gomez
-        </a>
-      </footer>
     </div>
   );
 }
