@@ -6,7 +6,7 @@ function HighScores() {
 
   useEffect(() => {
     const getScores = async () => {
-      const req = await fetch("http://localhost:3000/scores");
+      const req = await fetch(`${import.meta.env.VITE_SERVER_URL}/scores`);
       const data = await req.json();
       setScores(data.scores);
     };
@@ -30,12 +30,12 @@ function HighScores() {
           Play again
         </Link>
       </div>
-      <div className="flex justify-center text-center grid-cols-4 items-center px-2 p-10 bg-white border-double border-12 border-red-500  ">
+      <div className="flex flex-1 justify-center text-center grid-cols-4 items-center px-2 p-10 bg-white border-double border-12 border-red-500  ">
         <ul className="pr-10">
           {scores.map((score, index) => (
             <li key={index} className="grid grid-cols-3 py-1">
               <div className="text-end">{index + 1}.</div>
-              <div className="text-amber-500 text-center">{score.name}</div>
+              <div className="text-amber-400 text-center">{score.name}</div>
 
               <div>-- {formatTime(score.time)}</div>
             </li>

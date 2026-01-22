@@ -22,8 +22,8 @@ model Image {
 model Character {
   id        Int    @id @default(autoincrement())
   name      String
-  x         Int
-  y         Int
+  x         Float
+  y         Float
   tolerance Int
   imageId   Int
   image     Image  @relation(fields: [imageId], references: [id])

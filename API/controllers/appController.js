@@ -4,17 +4,16 @@ import {
   createUser,
 } from "../prisma/queries/appQueries.js";
 
+async function getCharacters(req, res) {
+  const characters = await findCharacters(1);
+  return res.status(201).json({ characters });
+}
+
 async function validateCoordinates(req, res) {
   try {
     const { imageId, userX, userY } = req.body;
 
-    // console.log(userX);
-    // console.log(userY);
-    // console.log(imageId);
-
     const characters = await findCharacters(Number(imageId));
-
-    // console.log(characters);
 
     characters.forEach((character) => {
       const hitX =
@@ -25,7 +24,6 @@ async function validateCoordinates(req, res) {
         userY <= character.y + character.tolerance;
 
       if (hitX && hitY) {
-        console.log(`CONTROLLER: ${character.name}`);
         return res.status(201).json({
           id: character.id,
         });
@@ -46,17 +44,14 @@ async function getScores(req, res) {
 }
 
 async function postScore(req, res) {
-  console.log(`postScore`, req.body);
-
   const { time, user } = req.body;
   const users = await createUser(time, user);
 
   if (users) {
-    console.log(users);
+    return res.status(201).json({
+      message: `postScore`,
+    });
   }
-  return res.status(201).json({
-    message: `postScore`,
-  });
 }
 
-export { validateCoordinates, postScore, getScores };
+export { validateCoordinates, postScore, getScores, getCharacters };

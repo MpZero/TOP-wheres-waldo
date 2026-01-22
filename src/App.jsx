@@ -4,19 +4,27 @@ import { Link } from "react-router";
 import classNames from "classnames";
 
 function App() {
-  //change this later
-  const characters = [
-    { id: 2, name: "Waldo" },
-    { id: 3, name: "Wenda" },
-    { id: 4, name: "Odlaw" },
-    { id: 5, name: "Wizard Whitebeard" },
-    { id: 6, name: "Woof" },
-  ];
-
   const [found, setFound] = useState(new Set());
   const [isRunning, setIsRunning] = useState(true);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [markers, setMarkers] = useState([]);
+  const [characters, setCharacters] = useState([]);
+
+  useEffect(() => {
+    const getCharacters = async () => {
+      const response = await fetch(import.meta.env.VITE_SERVER_URL, {
+        method: "GET",
+        headers: {
+          "Content-Type": "Application/JSON",
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        return setCharacters(data.characters);
+      }
+    };
+    getCharacters();
+  }, []);
 
   useEffect(() => {
     let interval;
@@ -39,21 +47,16 @@ function App() {
 
   const finishGame = async () => {
     setIsRunning(false);
-    console.log("Finished game. Your time:", elapsedTime);
     setElapsedTime(elapsedTime);
     const userInput = prompt("Please enter your name:");
 
-    console.log(`elapsed time ${elapsedTime}, user: ${userInput}`);
-
-    const api = await fetch("http://localhost:3000/scores", {
+    await fetch(`${import.meta.env.VITE_SERVER_URL}/scores`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ time: elapsedTime, user: userInput }),
     });
-
-    console.log(`appjsx api response`, api);
   };
 
   function getCoords(e) {
@@ -71,15 +74,13 @@ function App() {
     const relativeX = Number(((xCoord / rect.width) * 100).toFixed(2));
     const relativeY = Number(((yCoord / rect.height) * 100).toFixed(2));
 
-    console.log(`coords are: X${relativeX}% and Y${relativeY}%`);
-
     compareCoordinates(relativeX, relativeY);
   }
 
   async function compareCoordinates(userX, userY) {
-    const imageId = 2;
+    const imageId = 1;
     try {
-      const response = await fetch(`http://localhost:3000/`, {
+      const response = await fetch(import.meta.env.VITE_SERVER_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userX, userY, imageId }),
@@ -87,12 +88,10 @@ function App() {
 
       if (response.ok) {
         const result = await response.json();
-        console.log(`api call result`, result);
         if (result.id && !found.has(result.id)) {
           const newFound = new Set(found);
           newFound.add(result.id);
           setFound(newFound);
-          console.log(`newfound`, newFound);
           setMarkers((prevMarkers) => [
             ...prevMarkers,
             { id: result.id, x: userX, y: userY },

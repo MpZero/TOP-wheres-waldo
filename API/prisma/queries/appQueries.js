@@ -4,7 +4,6 @@ async function getCoords() {
   const coords = await prisma.image.findMany({
     include: { characters: true },
   });
-  console.log(`getCoords: `, coords);
 
   return coords;
 }
@@ -25,9 +24,8 @@ async function findUsers() {
 }
 
 async function createUser(time, name) {
-  const user = await prisma.user.create({
+  await prisma.user.create({
     data: { name: name, time: time },
   });
-  console.log(user);
 }
 export { getCoords, findCharacters, createUser, findUsers };

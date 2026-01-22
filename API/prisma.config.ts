@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { url } from "node:inspector";
 import { defineConfig, env } from "prisma/config";
 
 export default defineConfig({
