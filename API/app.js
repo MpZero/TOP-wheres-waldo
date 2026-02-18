@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import router from "./router/router.js";
 import cors from "cors";
@@ -6,10 +7,12 @@ const port = 3000;
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.DATABASE_URL,
     credentials: true,
   }),
 );
+console.log(process.env.DATABASE_URL);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/", router);
