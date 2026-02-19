@@ -11,7 +11,6 @@ app.use(
     credentials: true,
   }),
 );
-console.log(process.env.DATABASE_URL);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
