@@ -3,7 +3,8 @@ import express from "express";
 import router from "./router/router.js";
 import cors from "cors";
 const app = express();
-const port = 3000;
+// eslint-disable-next-line no-undef
+const port = process.env.PORT || 3000;
 
 app.use(
   cors({
