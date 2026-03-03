@@ -1,6 +1,6 @@
-import waldoFilmSet from "./assets/waldo-filmset.jpg";
 import { useState, useEffect } from "react";
-import { Link } from "react-router";
+import { Link, useOutletContext } from "react-router";
+// import { useNavigate } from "react-router";
 import classNames from "classnames";
 
 function App() {
@@ -9,6 +9,24 @@ function App() {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [markers, setMarkers] = useState([]);
   const [characters, setCharacters] = useState([]);
+  const [imageId, setImageId] = useState(null);
+  const { navigate } = useOutletContext();
+
+  useEffect(() => {
+    const getImage = async () => {
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/image`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "Application/JSON",
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        return setImageId(data);
+      }
+    };
+    getImage();
+  }, []);
 
   useEffect(() => {
     const getCharacters = async () => {
@@ -129,10 +147,13 @@ function App() {
     <>
       <div className=" flex justify-between lg:justify-around px-4 bg-white border-double border-12 border-red-500">
         <div className="flex gap-1.5">
-          <Link to="/" className="flex gap-2">
+          <div
+            onClick={() => navigate(0)}
+            className="flex gap-2 cursor-pointer"
+          >
             <h1 className=" text-blue-500">Where's</h1>
             <h1 className="text-red-500"> Waldo?</h1>
-          </Link>
+          </div>
         </div>
         <div className="timer">{formatTime(elapsedTime)}</div>
         <Link to="/scores" className="text-amber-400">
@@ -147,7 +168,7 @@ function App() {
         ))}
       </div>
       <div className="bg-white border-double border-12 border-red-500 flex justify-center relative">
-        <img src={waldoFilmSet} alt="" onClick={getCoords} />
+        <img src={imageId} alt="" onClick={getCoords} />
         {markers.map((marker) => (
           <div
             key={marker.id}

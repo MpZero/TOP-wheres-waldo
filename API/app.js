@@ -7,11 +7,11 @@ const port = 3000;
 
 app.use(
   cors({
-    origin: process.env.DATABASE_URL,
+    // eslint-disable-next-line no-undef
+    origin: process.env.FRONTEND_URL,
     credentials: true,
   }),
 );
-console.log(process.env.DATABASE_URL);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

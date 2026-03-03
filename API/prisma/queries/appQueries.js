@@ -28,4 +28,11 @@ async function createUser(time, name) {
     data: { name: name, time: time },
   });
 }
-export { getCoords, findCharacters, createUser, findUsers };
+
+async function fetchImage(id) {
+  const image = await prisma.image.findUnique({
+    where: { id: id },
+  });
+  return image.url;
+}
+export { getCoords, findCharacters, createUser, findUsers, fetchImage };

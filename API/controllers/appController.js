@@ -2,6 +2,7 @@ import {
   findCharacters,
   findUsers,
   createUser,
+  fetchImage,
 } from "../prisma/queries/appQueries.js";
 
 async function getCharacters(req, res) {
@@ -54,4 +55,11 @@ async function postScore(req, res) {
   }
 }
 
-export { validateCoordinates, postScore, getScores, getCharacters };
+async function getImage(req, res) {
+  const image = await fetchImage(1);
+  if (image) {
+    return res.status(201).json(image);
+  }
+}
+
+export { validateCoordinates, postScore, getScores, getCharacters, getImage };
