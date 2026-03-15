@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postinstall": "cd API/  && npx prisma generate && npx prisma migrate dev && npx tsx app.js"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
