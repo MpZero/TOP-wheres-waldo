@@ -23,5 +23,5 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/", router);
 
 app.listen(port, () => {
-  console.log(`Server running ${port}`);
+  console.log(`Server running`);
 });

@@ -5,14 +5,18 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "server": "npx tsx API/app.js",
+    "devserver": "npx tsx --watch API/app.js",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "postinstall": "cd API/  && npx prisma generate && npx prisma migrate dev && npx tsx app.js"
+    "postinstall": "npx prisma generate && npx prisma migrate dev && npm run server"
   },
   "dependencies": {
+    "@prisma/adapter-pg": "^7.5.0",
     "@tailwindcss/vite": "^4.1.17",
     "classnames": "^2.5.1",
+    "prisma": "^7.5.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.3",
     "react-router": "^7.12.0",
@@ -20,6 +24,9 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@prisma/client": "^7.5.0",
+    "@types/node": "^25.5.0",
+    "@types/pg": "^8.18.0",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
@@ -27,6 +34,8 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
     "vite": "^7.2.4"
   }
 }

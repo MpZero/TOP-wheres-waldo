@@ -3,7 +3,7 @@ import {
   findUsers,
   createUser,
   fetchImage,
-} from "../prisma/queries/appQueries.js";
+} from "../queries/appQueries.js";
 
 async function getCharacters(req, res) {
   const characters = await findCharacters(1);
