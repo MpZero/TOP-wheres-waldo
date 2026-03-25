@@ -9,8 +9,7 @@
     "devserver": "npx tsx --watch API/app.js",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "postinstall": "npx prisma generate && npx prisma migrate dev && npm run server"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.5.0",
