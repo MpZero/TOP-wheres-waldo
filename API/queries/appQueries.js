@@ -1,4 +1,4 @@
-import prisma from "../../prisma/prismaClient.ts";
+import prisma from "../prisma/prismaClient";
 
 async function getCoords() {
   const coords = await prisma.image.findMany({
