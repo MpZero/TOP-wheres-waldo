@@ -10,8 +10,6 @@ const __dirname = path.dirname(__filename);
 const envPath = path.join(__dirname, "..", ".env");
 config({ path: envPath });
 
-const envPathh = 
-
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
