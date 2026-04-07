@@ -14,12 +14,15 @@ function App() {
 
   useEffect(() => {
     const getImage = async () => {
-      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/image`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "Application/JSON",
+      const response = await fetch(
+        `${import.meta.env.VITE_SERVER_URL}/api/image`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "Application/JSON",
+          },
         },
-      });
+      );
       if (response.ok) {
         const data = await response.json();
         return setImageId(data);
@@ -30,7 +33,7 @@ function App() {
 
   useEffect(() => {
     const getCharacters = async () => {
-      const response = await fetch(import.meta.env.VITE_SERVER_URL, {
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api`, {
         method: "GET",
         headers: {
           "Content-Type": "Application/JSON",
@@ -68,7 +71,7 @@ function App() {
     setElapsedTime(elapsedTime);
     const userInput = prompt("Please enter your name:");
 
-    await fetch(`${import.meta.env.VITE_SERVER_URL}/scores`, {
+    await fetch(`api/${import.meta.env.VITE_SERVER_URL}/api/scores`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -98,7 +101,7 @@ function App() {
   async function compareCoordinates(userX, userY) {
     const imageId = 1;
     try {
-      const response = await fetch(import.meta.env.VITE_SERVER_URL, {
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userX, userY, imageId }),
