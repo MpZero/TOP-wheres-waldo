@@ -71,7 +71,7 @@ function App() {
     setElapsedTime(elapsedTime);
     const userInput = prompt("Please enter your name:");
 
-    await fetch(`api/${import.meta.env.VITE_SERVER_URL}/api/scores`, {
+    await fetch(`${import.meta.env.VITE_SERVER_URL}/api/scores`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
