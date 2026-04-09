@@ -14,15 +14,13 @@ function App() {
 
   useEffect(() => {
     const getImage = async () => {
-      const response = await fetch(
-        `${import.meta.env.VITE_SERVER_URL}/api/image`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "Application/JSON",
-          },
+      // `${import.meta.env.VITE_SERVER_URL}/api/image`, for dev only, for production it will be /api/image because of the proxy in vercel.json
+      const response = await fetch(`/api/image`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "Application/JSON",
         },
-      );
+      });
       if (response.ok) {
         const data = await response.json();
         return setImageId(data);
@@ -33,7 +31,8 @@ function App() {
 
   useEffect(() => {
     const getCharacters = async () => {
-      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api`, {
+      // ${import.meta.env.VITE_SERVER_URL}/api, for dev only, for production it will be /api because of the proxy in vercel.json
+      const response = await fetch(`/api`, {
         method: "GET",
         headers: {
           "Content-Type": "Application/JSON",
@@ -70,8 +69,8 @@ function App() {
     setIsRunning(false);
     setElapsedTime(elapsedTime);
     const userInput = prompt("Please enter your name:");
-
-    await fetch(`${import.meta.env.VITE_SERVER_URL}/api/scores`, {
+    // `${import.meta.env.VITE_SERVER_URL}/api/scores`, for dev only, for production it will be /api/scores because of the proxy in vercel.json
+    await fetch(`/api/scores`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -101,7 +100,8 @@ function App() {
   async function compareCoordinates(userX, userY) {
     const imageId = 1;
     try {
-      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api`, {
+      // ${import.meta.env.VITE_SERVER_URL}/api, for dev only, for production it will be /api because of the proxy in vercel.json
+      const response = await fetch(`/api`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userX, userY, imageId }),
