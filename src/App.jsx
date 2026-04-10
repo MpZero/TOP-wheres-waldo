@@ -29,7 +29,7 @@ function App() {
   useEffect(() => {
     const getCharacters = async () => {
       // ${import.meta.env.VITE_SERVER_URL}/api, for dev only, for production it will be /api because of the proxy in vercel.json
-      const response = await fetch(`/api`, {
+      const response = await fetch(`/api/`, {
         method: "GET",
         headers: {
           "Content-Type": "Application/JSON",
@@ -98,7 +98,7 @@ function App() {
     const imageId = 1;
     try {
       // ${import.meta.env.VITE_SERVER_URL}/api, for dev only, for production it will be /api because of the proxy in vercel.json
-      const response = await fetch(`/api`, {
+      const response = await fetch(`/api/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userX, userY, imageId }),
