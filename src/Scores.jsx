@@ -6,7 +6,7 @@ function HighScores() {
 
   useEffect(() => {
     const getScores = async () => {
-      const req = await fetch(`${import.meta.env.VITE_SERVER_URL}/scores`);
+      const req = await fetch(`/api/scores`);
       const data = await req.json();
       setScores(data.scores);
     };
