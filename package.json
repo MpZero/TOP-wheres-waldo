@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "start": "npx tsx API/app.js",
-    "devserver": "npx tsx --watch API/app.js",
+    "start": "npx tsx api/app.js",
+    "devserver": "npx tsx --watch api/app.js",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",

@@ -17,9 +17,6 @@ function App() {
       // `${import.meta.env.VITE_SERVER_URL}/api/image`, for dev only, for production it will be /api/image because of the proxy in vercel.json
       const response = await fetch(`/api/image`, {
         method: "GET",
-        headers: {
-          "Content-Type": "Application/JSON",
-        },
       });
       if (response.ok) {
         const data = await response.json();
