@@ -10,9 +10,8 @@ export default function Layout() {
         <Outlet context={{ navigate }} />
         <div
           onClick={() => {
-            navigate(0);
+            navigate("/");
           }}
-          to="/"
           className="flex justify-center gap-2 cursor-pointer px-4 bg-white border-double border-12 border-red-500"
         >
           <h3 className=" text-blue-500">Play</h3>
