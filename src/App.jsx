@@ -167,18 +167,33 @@ function App() {
           </p>
         ))}
       </div>
-      <div className="bg-white border-double border-12 border-red-500 flex justify-center relative">
-        <img src={imageId} alt="" onClick={getCoords} />
-        {markers.map((marker) => (
-          <div
-            key={marker.id}
-            style={{
-              ...styles.markerCircle,
-              left: `${marker.x}%`,
-              top: `${marker.y}%`,
-            }}
-          ></div>
-        ))}
+      {imageId ? (
+        <div className="bg-white border-double border-12 border-red-500 flex justify-center relative h-fit">
+          <img src={imageId} alt="" onClick={getCoords} />
+          {markers.map((marker) => (
+            <div
+              key={marker.id}
+              style={{
+                ...styles.markerCircle,
+                left: `${marker.x}%`,
+                top: `${marker.y}%`,
+              }}
+            ></div>
+          ))}
+        </div>
+      ) : (
+        <div className="flex justify-center items-center h-full bg-white border-double border-12 border-red-500">
+          <p className="text-red-500 text-xl">Loading...</p>
+        </div>
+      )}
+      <div
+        onClick={() => {
+          navigate(0);
+        }}
+        className="flex justify-center gap-2 cursor-pointer px-4 bg-white border-double border-12 border-red-500"
+      >
+        <h3 className=" text-blue-500">Play</h3>
+        <h3 className="text-red-500"> again!</h3>
       </div>
     </>
   );

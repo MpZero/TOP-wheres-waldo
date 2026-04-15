@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 
 function HighScores() {
-  const [scores, setScores] = useState([]);
+  const [scores, setScores] = useState(null);
 
   useEffect(() => {
     const getScores = async () => {
+      // `${import.meta.env.VITE_SERVER_URL}/api/scores`, for dev only, for production it will be /api/scores because of the proxy in vercel.json
       const req = await fetch(`/api/scores`);
       const data = await req.json();
       setScores(data.scores);
@@ -30,17 +31,26 @@ function HighScores() {
           Play again
         </Link>
       </div>
-      <div className="flex flex-1 justify-center text-center grid-cols-4 items-center px-2 p-10 bg-white border-double border-12 border-red-500  ">
-        <ul className="pr-10">
-          {scores.map((score, index) => (
-            <li key={index} className="grid grid-cols-3 py-1">
-              <div className="text-end">{index + 1}.</div>
-              <div className="text-amber-400 text-center">{score.name}</div>
+      <div className="flex flex-1 justify-center grid-cols-4 items-center px-2 p-10 bg-white border-double border-12 border-red-500  ">
+        {scores ? (
+          <ul className="grid text-center gap-2">
+            {scores.map((score, index) => (
+              <li
+                key={index}
+                className="grid grid-cols-3 py-1 border-b border-gray-300"
+              >
+                <div className="text-center">{index + 1}.</div>
+                <div className="text-amber-400">{score.name}</div>
 
-              <div>-- {formatTime(score.time)}</div>
-            </li>
-          ))}
-        </ul>
+                <div className="">-- {formatTime(score.time)}</div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <ul>
+            <p className="text-red-500 text-xl">Loading...</p>
+          </ul>
+        )}
       </div>
     </>
   );
